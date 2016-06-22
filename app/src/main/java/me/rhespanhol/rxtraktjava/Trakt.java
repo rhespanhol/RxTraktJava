@@ -50,7 +50,7 @@ import java.util.UUID;
 /**
  * Helper class for easy usage of the trakt v2 API using mRetrofit.
  */
-public final class Trakt {
+public class Trakt {
 
     /**
      * trakt API v2 URL.
@@ -79,15 +79,6 @@ public final class Trakt {
     private String mClientSecret;
     private String mRedirectUri;
     private AccessToken mAccessToken;
-
-    /**
-     * Get a new API manager instance.
-     *
-     * @param clientId The API key obtained from trakt, currently equal to the OAuth client id.
-     */
-    public Trakt(String clientId) {
-        this.mClientId = clientId;
-    }
 
     /**
      * Get a new API manager instance capable of calling OAuth2 protected endpoints.
