@@ -204,7 +204,7 @@ public class Trakt {
      *
      * @param authCode A valid authorization code (see {@link #buildAuthenticationUrl()}.
      */
-    public Single<AccessToken> exchangeCodeForAccessToken(String authCode) throws IOException {
+    public Single<AccessToken> exchangeCodeForAccessToken(String authCode) {
         return authentication().exchangeCodeForAccessToken(
                 GrantType.AUTHORIZATION_CODE.toString(),
                 authCode,
@@ -223,7 +223,7 @@ public class Trakt {
      * <p>
      * <p>On failure re-authorization of your app is required (see {@link #buildAuthenticationUrl}).
      */
-    public Single<AccessToken> refreshAccessToken() throws IOException {
+    public Single<AccessToken> refreshAccessToken() {
         return authentication().refreshAccessToken(
                 GrantType.REFRESH_TOKEN.toString(),
                 getAccessToken().refresh_token,
