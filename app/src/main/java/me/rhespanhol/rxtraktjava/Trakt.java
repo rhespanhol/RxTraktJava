@@ -131,16 +131,16 @@ public class Trakt {
     }
 
     /**
-     * Creates a {@link Retrofit.Builder} that sets the base URL, adds a Gson converter and sets {@link #okHttpClient()}
+     * Creates a {@link Retrofit.Builder} that sets the base URL, adds a Gson converter and sets {@link #getOkHttpClient()}
      * as its client.
      *
-     * @see #okHttpClient()
+     * @see #getOkHttpClient()
      */
-    protected Retrofit.Builder retrofitBuilder() {
+    protected Retrofit.Builder getRetrofitBuilder() {
         return new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create(TraktHelper.getGsonBuilder().create()))
-                .client(okHttpClient());
+                .client(getOkHttpClient());
     }
 
     /**
@@ -149,7 +149,7 @@ public class Trakt {
      *
      * @see #setOkHttpClientDefaults(OkHttpClient.Builder)
      */
-    protected synchronized OkHttpClient okHttpClient() {
+    protected synchronized OkHttpClient getOkHttpClient() {
         if (mOkHttpClient == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             setOkHttpClientDefaults(builder);
@@ -171,7 +171,7 @@ public class Trakt {
      */
     protected Retrofit retrofit() {
         if (mRetrofit == null) {
-            mRetrofit = retrofitBuilder().build();
+            mRetrofit = getRetrofitBuilder().build();
         }
         return mRetrofit;
     }
@@ -190,6 +190,14 @@ public class Trakt {
         return OAUTH2_AUTHORIZATION_URL +
                 "?client_id=" + mClientId +
                 "&redirect_uri=" + mRedirectUri +
+                "&response_type=" + ResponseType.CODE.toString() +
+                "&state=" + UUID.randomUUID().toString();
+    }
+
+    public static String buildAuthenticationUrl(String clientId, String redirectUri) {
+        return OAUTH2_AUTHORIZATION_URL +
+                "?client_id=" + clientId +
+                "&redirect_uri=" + redirectUri +
                 "&response_type=" + ResponseType.CODE.toString() +
                 "&state=" + UUID.randomUUID().toString();
     }
